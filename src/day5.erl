@@ -99,7 +99,7 @@ doesnt_contain_forbidden(Str) ->
 
 -include_lib("eunit/include/eunit.hrl").
 
-day3_test_() ->
+day5_test_() ->
     [ ?_assert(is_nice("ugknbfddgicrmopn"))
     , ?_assert(contains_3_vowels("ugknbfddgicrmopn"))
     , ?_assert(has_double_letters("ugknbfddgicrmopn"))
