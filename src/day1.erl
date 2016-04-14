@@ -64,7 +64,7 @@ calc($() -> 1;
 calc($)) -> -1;
 calc(_)  -> 0.
 
--include_lib("eunit/include//eunit.hrl").
+-include_lib("eunit/include/eunit.hrl").
 
 day1_test_() ->
     [ ?_assertEqual({0, 5}, solve("(())"))
