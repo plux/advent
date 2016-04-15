@@ -61,8 +61,7 @@ check_basement(-1, N) -> io:format("Hit basement @ ~p~n", [N]);
 check_basement(_, _)  -> ok.
 
 calc($() -> 1;
-calc($)) -> -1;
-calc(_)  -> 0.
+calc($)) -> -1.
 
 -include_lib("eunit/include/eunit.hrl").
 
