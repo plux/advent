@@ -70,3 +70,6 @@ day1_test_() ->
     , ?_assertEqual({0, 5}, solve("()()"))
     , ?_assertEqual({3, 4}, solve("((("))
     ].
+
+solve_test() ->
+    ?assertEqual({280, 7001}, solve()).

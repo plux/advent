@@ -46,19 +46,21 @@
 -module(day2).
 -compile([export_all]).
 
+solve_part1() ->
+    solve(input(), fun surface_area/3).
 
-solve() ->
+solve_part2() ->
+    solve(input(), fun ribbon_length/3).
+
+input() ->
     {ok, Input} = file:read_file("input/day2"),
-    solve(binary_to_list(Input)).
+    string:tokens(binary_to_list(Input), "\n").
 
-solve(Input) ->
-    Presents     = parse(Input),
-    SurfaceArea  = lists:sum([surface_area(L, W, H) || {L, W, H} <- Presents]),
-    RibbonLength = lists:sum([ribbon_length(L, W, H) || {L, W, H} <- Presents]),
-    {SurfaceArea, RibbonLength}.
+solve(Input, F) ->
+    lists:sum([F(L, W, H) || {L, W, H} <- parse(Input)]).
 
 parse(Input) ->
-    [parse_line(L) || L <- string:tokens(Input, "\n")].
+    [parse_line(L) || L <- Input].
 
 parse_line(Line) ->
     {ok, [L, W, H], []} = io_lib:fread("~dx~dx~d", Line),
@@ -87,7 +89,11 @@ ribbon_length_test_() ->
     , ?_assertEqual(14, ribbon_length(1,1,10))
     ].
 
-parse_test_() ->
-    [ ?_assertEqual([], parse("\n"))
-    , ?_assertEqual([{1,2,3}, {3,2,1}], parse("1x2x3\n3x2x1\n"))
-    ].
+parse_test() ->
+    ?assertEqual([{1,2,3}, {3,2,1}], parse(["1x2x3","3x2x1"])).
+
+solve_part1_test() ->
+    ?assertEqual(1586300, solve_part1()).
+
+solve_part2_test() ->
+    ?assertEqual(3737498, solve_part2()).
