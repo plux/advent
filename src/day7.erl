@@ -75,7 +75,7 @@ input() ->
 
 solve(Input, S) ->
     Ops = parse_ops(Input),
-    eval_loop(Ops, [], S).
+    eval_loop(Ops, S).
 
 parse_ops(Input) ->
     lists:map(fun parse_op/1, Input).
@@ -94,18 +94,16 @@ b_not(X) ->
     %% Simulate 16 bit numbers
     (bnot X) band ((1 bsl 16)-1).
 
-eval_loop([], [], S) ->
+eval_loop([], S) ->
     S;
-eval_loop([], Inc, S) ->
-    eval_loop(Inc, [], S);
-eval_loop([{K, Op}|Ops], Inc, S) ->
+eval_loop([{K, Op}|Ops], S) ->
     case maps:is_key(K, S) of
         true ->
-            eval_loop(Ops, Inc, S);
+            eval_loop(Ops, S);
         false ->
             case eval(Op, S) of
-                {done, Val} -> eval_loop(Ops, Inc, maps:put(K, Val, S));
-                incomplete  -> eval_loop(Ops, [{K, Op}|Inc], S)
+                {done, Val} -> eval_loop(Ops, maps:put(K, Val, S));
+                incomplete  -> eval_loop(Ops ++ [{K, Op}], S)
             end
     end.
 
